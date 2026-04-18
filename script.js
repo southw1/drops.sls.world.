@@ -1,102 +1,110 @@
-body {
-    margin: 0;
-    background: radial-gradient(circle at top, #0f1720, #05070a);
-    color: white;
-    font-family: 'Segoe UI', sans-serif;
-    text-align: center;
+const track = document.getElementById("track");
+const spinBtn = document.getElementById("spinBtn");
+const tierButtons = document.querySelectorAll(".tier-btn");
+
+const poolList = document.getElementById("poolList");
+const poolCount = document.getElementById("poolCount");
+const historyList = document.getElementById("historyList");
+const bottomResult = document.getElementById("bottomResult");
+
+const tickSound = document.getElementById("tickSound");
+const winSound = document.getElementById("winSound");
+
+let history = [];
+
+const guns = {
+    t0: ["Hi Point", "Glock 26", "Glock 22"],
+    t1: ["G17", "G19", "G21"],
+    t2: ["Banshee ARP", "G40 Switch"],
+    t3: ["Micro Draco", "G23 Switch"],
+    t4: ["Remington 870", "Glock 18"]
+};
+
+// Toggle tiers
+tierButtons.forEach(btn => {
+    btn.onclick = () => {
+        btn.classList.toggle("active");
+        updatePool();
+    };
+});
+
+function getPool() {
+    let pool = [];
+    tierButtons.forEach(btn => {
+        if (btn.classList.contains("active")) {
+            pool = pool.concat(
+                guns[btn.dataset.tier].map(g => ({
+                    name: g,
+                    tier: btn.dataset.tier
+                }))
+            );
+        }
+    });
+    return pool;
 }
 
-/* Tiers */
-.tier-btn {
-    margin: 6px;
-    padding: 10px 14px;
-    border-radius: 12px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    color: white;
-    cursor: pointer;
-    transition: 0.25s;
-}
-.tier-btn.active {
-    background: #00c3ff;
-    box-shadow: 0 0 15px #00c3ff;
+function updatePool() {
+    let pool = getPool();
+    poolList.innerHTML = pool.map(i => `[${i.tier}] ${i.name}`).join("<br>");
+    poolCount.innerHTML = `Items: ${pool.length}`;
 }
 
-/* Spinner */
-.spin-container {
-    width: 92%;
-    max-width: 1000px;
-    height: 150px;
-    margin: 50px auto;
-    overflow: hidden;
-    border-radius: 18px;
-    background: rgba(255,255,255,0.03);
-    backdrop-filter: blur(10px);
+function buildTrack(pool, winner) {
+    track.innerHTML = "";
+    let winIndex = 45;
+
+    for (let i = 0; i < 60; i++) {
+        let item = i === winIndex ? winner : pool[Math.floor(Math.random()*pool.length)];
+
+        let div = document.createElement("div");
+        div.className = `card ${item.tier}`;
+        div.innerHTML = `<b>${item.name}</b><span>${item.tier.toUpperCase()}</span>`;
+
+        if (i === winIndex) div.id = "winnerCard";
+
+        track.appendChild(div);
+    }
+
+    return winIndex;
 }
 
-/* Cards */
-.card {
-    width: 150px;
-    height: 130px;
-    margin: 10px;
-    border-radius: 22px;
-    background: #111;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    transition: 0.25s;
-}
+spinBtn.onclick = () => {
+    let pool = getPool();
+    if (!pool.length) return;
 
-.card span {
-    font-size: 11px;
-    opacity: 0.7;
-}
+    let winner = pool[Math.floor(Math.random() * pool.length)];
+    let winIndex = buildTrack(pool, winner);
 
-/* Tier Colors */
-.t0 { border: 2px solid #777; }
-.t1 { border: 2px solid #00c3ff; }
-.t2 { border: 2px solid #00ff88; }
-.t3 { border: 2px solid gold; }
-.t4 { border: 2px solid red; box-shadow: 0 0 20px red; }
+    const cardWidth = 170;
+    const center = track.parentElement.offsetWidth / 2 - cardWidth / 2;
 
-/* Selector */
-.selector {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 170px;
-    height: 150px;
-    border: 3px solid #00c3ff;
-    border-radius: 20px;
-}
+    let distance = (winIndex * cardWidth) - center + 2500;
 
-/* Winner */
-#winnerCard {
-    transform: scale(1.3);
-    box-shadow: 0 0 30px gold;
-}
+    track.style.transition = "transform 2s cubic-bezier(0.1,0.8,0.2,1)";
+    track.style.transform = `translateX(-${distance}px)`;
 
-/* Panels */
-.panel {
-    display: inline-block;
-    width: 260px;
-    margin: 10px;
-    padding: 10px;
-    background: rgba(255,255,255,0.03);
-    border-radius: 12px;
-}
+    let tickInterval = setInterval(() => tickSound.play(), 100);
 
-/* Bottom */
-.bottom-result {
-    position: fixed;
-    bottom: -100px;
-    width: 100%;
-    padding: 15px;
-    background: #111;
-    border-top: 2px solid #00c3ff;
-    transition: 0.4s;
-}
-.bottom-result.show {
-    bottom: 0;
-}
+    setTimeout(() => {
+        clearInterval(tickInterval);
+
+        let final = (winIndex * cardWidth) - center;
+        track.style.transition = "transform 0.4s ease-out";
+        track.style.transform = `translateX(-${final}px)`;
+
+        winSound.play();
+
+        bottomResult.innerHTML = ` ${winner.name} (${winner.tier.toUpperCase()})`;
+        bottomResult.classList.add("show");
+
+        setTimeout(() => bottomResult.classList.remove("show"), 4000);
+
+        history.unshift(winner);
+        if (history.length > 10) history.pop();
+
+        historyList.innerHTML = history.map(i => `[${i.tier}] ${i.name}`).join("<br>");
+
+    }, 2000);
+};
+
+updatePool();
