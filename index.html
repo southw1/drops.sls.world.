@@ -10,9 +10,54 @@
 <h1>🎯 Drop Spinner</h1>
 
 <div class="controls">
-    <button class="tier active" data-tier="t1">T1</button>
-    <button class="tier active" data-tier="t2">T2</button>
-    <button class="tier active" data-tier="t3">T3</button>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Faction Drops</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>🎯 Faction Drops</h1>
+
+<div class="tiers">
+    <button class="tier-btn active" data-tier="t0">T0</button>
+    <button class="tier-btn active" data-tier="t1">T1</button>
+    <button class="tier-btn active" data-tier="t2">T2</button>
+    <button class="tier-btn active" data-tier="t3">T3</button>
+    <button class="tier-btn active" data-tier="t4">T4</button>
+</div>
+
+<div class="spin-container">
+    <div class="track" id="track"></div>
+    <div class="selector"></div>
+</div>
+
+<button id="spinBtn">SPIN</button>
+
+<div class="info-panels">
+    <div class="panel">
+        <h3>📦 Pool</h3>
+        <div id="poolCount"></div>
+        <div id="poolList"></div>
+    </div>
+
+    <div class="panel">
+        <h3>📜 History</h3>
+        <div id="historyList"></div>
+    </div>
+</div>
+
+<div class="bottom-result" id="bottomResult"></div>
+
+<!-- 🔊 Sounds -->
+<audio id="tickSound" src="https://www.soundjay.com/buttons/sounds/button-16.mp3"></audio>
+<audio id="winSound" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"></audio>
+
+<script src="script.js"></script>
+</body>
+</html>
 </div>
 
 <div class="spinner">
