@@ -13,11 +13,61 @@ const winSound = document.getElementById("winSound");
 let history = [];
 
 const guns = {
-    t0: ["Hi Point", "Glock 26", "Glock 22"],
-    t1: ["G17", "G19", "G21"],
-    t2: ["Banshee ARP", "G40 Switch"],
-    t3: ["Micro Draco", "G23 Switch"],
-    t4: ["Remington 870", "Glock 18"]
+    T0: [
+        { name: "Hi Point", label: "SNS Pistol EXT" },
+        { name: "Glock 26", label: "SNS Pistol MK2 EXT" },
+        { name: "Glock 22", label: "Pistol MK2" }
+        { name: "Glock 17", label: "Combat Pistol" }
+    ],
+    ],
+
+    T1: [
+        { name: "Glock 17", label: "Standard" },
+        { name: "Glock 19", label: "Standard" },
+        { name: "Glock 21", label: "Standard" },
+        { name: "PD 509", label: "Standard" }
+        { name: "FN", label: "Standard" }
+    ],
+    ],
+
+    T2: [
+        { name: "Banshee ARP", label: "SMG Build" },
+        { name: "G40 Switch", label: "Standard" },
+        { name: "G19 Switch", label: "Standard" },
+        { name: "Glock 40", label: "Custom" }
+        { name: "Glock 26", label: "Standard" }
+        { name: "Glock 22", label: "Pistol MK2" }
+    ],
+    ],
+    ],
+
+    T3: [
+        { name: "7 Inch ARP", label: "Compact AR" },
+        { name: "Micro Draco", label: "Mini AK" },
+        { name: "G17 Gen4 Switch", label: "Standard" },
+        { name: "G23 Switch", label: "Switch" }
+        { name: "Glock 26 Switch", label: "Standard" }
+        { name: "Glock 20", label: "Standard" }
+        { name: "Glock 17", label: "Standard" }
+        { name: "Glock 19", label: "Standard" }
+        { name: "PD 509", label: "Standard" }
+    ],
+    ],
+    ],    
+    ],
+
+    T4: [
+        { name: "Remington 870", label: "Shotgun" },
+        { name: "Whiteout ARP", label: "Legendary" },
+        { name: "300 Blackout", label: "Rifle" },
+        { name: "Glock 18 Switch", label: "Full Auto" }
+        { name: "G30 Switch", label: "Standard" }
+        { name: "G22 Switch", label: "Standard" }
+        { name: "Glock 40", label: "Standard" }
+        { name: "FN", label: "Standard" }
+        { name: "Glock 21", label: "Standard" }
+    ]
+};
 };
 
 // Toggle tiers
