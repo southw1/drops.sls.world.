@@ -94,7 +94,7 @@ spinBtn.onclick = () => {
 
         winSound.play();
 
-        bottomResult.innerHTML = ` ${winner.name} (${winner.tier.toUpperCase()})`;
+        bottomResult.innerHTML = `🎯 ${winner.name} (${winner.tier.toUpperCase()})`;
         bottomResult.classList.add("show");
 
         setTimeout(() => bottomResult.classList.remove("show"), 4000);
