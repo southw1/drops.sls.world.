@@ -108,7 +108,9 @@ function buildTrack(pool, winner) {
 
         let div = document.createElement("div");
         div.className = `card ${item.tier}`;
-        div.innerHTML = `<b>${item.name}</b><span>${item.tier.toUpperCase()}</span>`;
+   div.innerHTML = `
+    <strong>${item.name}</strong> <span>${item.label}</span>
+`;
 
         if (i === winIndex) div.id = "winnerCard";
 
