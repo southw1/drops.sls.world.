@@ -12,7 +12,6 @@ const winSound = document.getElementById("winSound");
 
 let history = [];
 
-const guns = {
   t0: [
     // 🔘 Budget / Entry Pistols
     { name: "Hi Point", label: "SNS Pistol EXT" },
